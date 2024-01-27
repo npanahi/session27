@@ -10,45 +10,38 @@ const mainPapeImage =
 export default function MoviePage() {
   const [movies, setMovies] = useState(null);
   const [metadata, setMetadata] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [genres, setGenres] = useState(null);
 
   useEffect(() => {
-    getAPI();
+    getMovies();
+    getGenres();
   }, []);
-  async function getAPI() {
+  async function getMovies() {
     try {
-      const res = await api.get(`movies?page=${currentPage}`);
-      setCurrentPage(currentPage + 1);
-
-      setMetadata(res.data.metadata);
-
-      if (movies === null) {
-        setMovies(res.data.data);
-      } else {
-        movies.push(...res.data.data);
-
-        setMovies(movies);
-
-        // setMovies({ data: [...movies.data, ...res.data.data] });
-        // console.log(movies);
-      }
+      const res = await api.get(`movies`);
+      setMovies(res.data.data);
     } catch (error) {}
   }
-  // function onClicks() {
-  //   getAPI();
-  // }
+  async function getGenres() {
+    try {
+      const res = await api.get("genres");
+      setGenres(res.data);
+    } catch (error) {}
+  }
+  function renderGenre() {
+    return genres.map(({ name, id }) => {
+      return <MovieList genreID={id} genreName={name} />;
+    });
+  }
   if (movies === null) {
     return "Loading ..";
   }
-  console.log(movies);
-  console.log(metadata);
+
   return (
     <Fragment>
       <Header />
       {movies !== null ? <Hero movie={movies[0]} /> : ""}
-      <MovieList movies={movies} />
-      <MovieList movies={movies} />
-      <button onClick={getAPI}>LOAD MORE</button>
+      <ul>{genres === null ? "" : renderGenre()}</ul>
     </Fragment>
   );
 }
