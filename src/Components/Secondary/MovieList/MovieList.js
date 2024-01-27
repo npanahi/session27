@@ -32,7 +32,7 @@ export default function MovieList({ genreID, genreName }) {
   function renderList() {
     return movies.map(({ title, poster, id }) => {
       return (
-        <li className="col-5">
+        <li>
           <img src={poster} alt="poster" />
           <Link to={`/movies/${id}`}>
             <p>{title}</p>
@@ -45,7 +45,9 @@ export default function MovieList({ genreID, genreName }) {
     <div className="movie-list">
       <div className="container">
         <div className="list">
-          <h1>{genreName}</h1>
+          <Link to={`genres/${genreID}`}>
+            <h1>{genreName}</h1>
+          </Link>
           <ul className="flex-x gap-10">
             {movies === null ? "" : renderList()}
           </ul>
