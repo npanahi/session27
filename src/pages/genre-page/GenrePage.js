@@ -15,7 +15,7 @@ export default function GenrePage() {
   }, []);
   async function getMovies() {
     try {
-      const res = await api.get(`/genres/${genre_id}/movies`);
+      const res = await api.get(`/genres/${genre_id}/movies?size=100`);
       setMovies(res.data.data);
     } catch (error) {}
   }
@@ -46,13 +46,13 @@ export default function GenrePage() {
       }
     });
   }
+
   return (
     <>
       <Header />
       {movies !== null ? <Hero movie={movies[0]} /> : ""}
       <h1>{renderGenre()}</h1>
       <ul className="flex-x">{renderMovies()}</ul>
-      <div>jkujffcghvjko</div>
     </>
   );
 }

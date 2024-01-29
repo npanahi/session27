@@ -37,6 +37,7 @@ export default function MoviePage() {
       );
     });
   }
+
   if (movies === null) {
     return "Loading ..";
   }

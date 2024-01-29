@@ -21,6 +21,7 @@ export default function InternalPage() {
   if (movie === null) {
     return "Loading...";
   }
+
   return (
     <Fragment>
       <Header />
